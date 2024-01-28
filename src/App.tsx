@@ -1,15 +1,20 @@
-import './style.scss'
+import React, { useState } from "react"
+import "./style.scss"
 import { Form } from "./Form"
 import { Answer } from "./Answer"
 
 function App() {
-  console.log(FormData)
+  const [formData, setFormData] = useState(null)
+
+  function updateFormData(newData){
+    setFormData(newData)
+  }
 
   return (
     <>
       <div className="container">
-        <Form />
-        <Answer />
+        <Form updateFormData={updateFormData}/>
+        <Answer formData={formData}/>
       </div>
     </>
   )

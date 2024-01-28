@@ -1,15 +1,14 @@
-export function Form(){
+import { FormEvent } from "react"
+import "./style.scss"
 
-    function formData(e: Event){
-        e.preventDefault()
+export function Form({ updateFormData }){
 
-        const formData = new FormData(e.currentTarget)
+    function formData(e: FormEvent<HTMLFormElement>){
+      e.preventDefault()
 
-        const day = formData.get('day') as string
-        const month = formData.get('month') as string
-        const year = formData.get('year') as string
+      const formData = new FormData(e.currentTarget)
 
-        return formData
+      updateFormData(formData)
     }
 
     return(
@@ -20,15 +19,25 @@ export function Form(){
           <div className="fields">
             <div className="field">
               <label htmlFor="day"> Day </label>
-              <input placeholder="DD" id="day" name="day"/>
+              <input type="number" id="day" name="day" required
+                placeholder="DD"
+                min={1} max={31}
+              />
             </div>
             <div className="field">
               <label htmlFor="month"> Month</label>
-              <input placeholder="MM" id="month" name="month"/>
+              <input type="number" id="month" name="month" required 
+                placeholder="MM"
+                min={1} max={12}
+              />
             </div>
             <div className="field">
               <label htmlFor="year"> Year </label>
-              <input placeholder="YYYY" id="year" name="year"/>
+              <input type="number" id="year" name="year" required
+                placeholder="YYYY"
+                maxLength={4}
+                min={1850} max={2024}    
+              />
             </div>
           </div>
           <div className="submit">
