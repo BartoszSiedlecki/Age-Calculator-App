@@ -34,7 +34,7 @@ export function Answer({ formData }){
             </div>
             <div className="answer">
               <div className="number"> { formDay !== null ? day : "--" } </div>
-              { day == 1 ? "day" : "day" }
+              { day == 1 ? "day" : "days" }
             </div>
         </div>
     )
