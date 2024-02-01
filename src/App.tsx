@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import "./style.scss"
 import { Form } from "./Form"
 import { Answer } from "./Answer"

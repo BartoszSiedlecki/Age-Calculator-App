@@ -1,41 +1,49 @@
-import React from "react"
-
 export function Answer({ formData }){
 
-    const formDay = formData ? formData.get("day") : null
-    const formMonth = formData ? formData.get("month") : null
-    const formYear = formData ? formData.get("year") : null
-
-    const today = new Date()
-    let year = today.getFullYear() - formYear
-    let month = today.getMonth()+1 - formMonth
-    let day = today.getDate() - formDay
-
-    if(month < 0 || month === 0 && day < 0){
-      year--
-      month = 12 + month
-    }
-
-    if(day < 0){
-      month--
-      const lastMonthDay = new Date(today.getFullYear(), today.getMonth(), 0).getDate()
-      day = lastMonthDay + day
-    }
-
+  if(!formData){
     return(
-        <div className="calculator">
-            <div className="answer">
-              <div className="number"> { formYear !== null ? year : "--" } </div>
-              { year == 1 ? "year" : "years" }
-            </div>
-            <div className="answer">
-              <div className="number"> { formMonth !== null ? month : "--" } </div>
-              { month == 1 ? "month" : "months" }
-            </div>
-            <div className="answer">
-              <div className="number"> { formDay !== null ? day : "--" } </div>
-              { day == 1 ? "day" : "days" }
-            </div>
-        </div>
+      <div className="calculator"> 
+        <div className="answer"><div className="number">--</div>years</div>
+        <div className="answer"><div className="number">--</div>months</div>
+        <div className="answer"><div className="number">--</div>days</div>
+      </div>
     )
+  }
+
+  const formDay = parseInt(formData.get("day"), 10)
+  const formMonth =  parseInt(formData.get("month"), 10)
+  const formYear = parseInt(formData.get("year"), 10)
+
+  const birthDate = new Date(formYear, formMonth - 1, formDay)
+  const today = new Date();
+
+  let ageYears = today.getFullYear() - birthDate.getFullYear()
+  let ageMonths = today.getMonth() - birthDate.getMonth()
+  let ageDays = today.getDate() - birthDate.getDate()
+
+  if(ageDays < 0){
+    ageMonths--
+    const previousMonth = today.getMonth() - 1 < 0 ? 11 : today.getMonth() - 1
+    const daysInPreviousMonth = new Date(today.getFullYear(), previousMonth + 1, 0).getDate()
+    ageDays += daysInPreviousMonth
+  }
+
+  if(ageMonths < 0){
+    ageYears--
+    ageMonths += 12
+  }
+
+  return(
+    <>
+      <div className="answer">
+        <div className="number">{ageYears}</div> {ageYears === 1 ? "year" : "years"}
+      </div>
+      <div className="answer">
+        <div className="number">{ageMonths}</div> {ageMonths === 1 ? "month" : "months"}
+      </div>
+      <div className="answer">
+        <div className="number">{ageDays}</div> {ageDays === 1 ? "day" : "days"}
+      </div>
+    </>
+  )
 }
