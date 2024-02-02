@@ -1,14 +1,28 @@
 import { FormEvent } from "react"
 import "./style.scss"
+import { FormData } from "./types"
 
-export function Form({ updateFormData }){
+interface FormProps{
+  updateFormData: (formData: FormData) => void;
+}
+
+export function Form({ updateFormData }: FormProps){
 
     function formData(e: FormEvent<HTMLFormElement>){
       e.preventDefault()
 
-      const formData = new FormData(e.currentTarget)
+      const formElements = e.currentTarget.elements
+      const day = formElements.namedItem("day") as HTMLInputElement
+      const month = formElements.namedItem("month") as HTMLInputElement
+      const year = formElements.namedItem("year") as HTMLInputElement
 
-      updateFormData(formData)
+      const newFormData: FormData ={
+        days: parseInt(day.value, 10),
+        months: parseInt(month.value, 10),
+        years: parseInt(year.value, 10)
+      }
+
+      updateFormData(newFormData)
     }
 
     return(

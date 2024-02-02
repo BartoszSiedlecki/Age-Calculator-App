@@ -1,4 +1,10 @@
-export function Answer({ formData }){
+import { FormData } from "./types"
+
+interface AnswerProps{
+  formData: FormData
+}
+
+export function Answer({ formData }: AnswerProps){
 
   if(!formData){
     return(
@@ -10,9 +16,9 @@ export function Answer({ formData }){
     )
   }
 
-  const formDay = parseInt(formData.get("day"), 10)
-  const formMonth =  parseInt(formData.get("month"), 10)
-  const formYear = parseInt(formData.get("year"), 10)
+  const formDay = formData.days
+  const formMonth =  formData.months
+  const formYear = formData.years
 
   const birthDate = new Date(formYear, formMonth - 1, formDay)
   const today = new Date();
