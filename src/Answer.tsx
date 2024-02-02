@@ -1,7 +1,7 @@
 import { FormData } from "./types"
 
 interface AnswerProps{
-  formData: FormData
+  formData: FormData | null
 }
 
 export function Answer({ formData }: AnswerProps){
